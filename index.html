@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel 統計分析工具</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- SheetJS：在瀏覽器中讀取 Excel -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="container">
+    <header class="page-header">
+      <div class="eyebrow">EXCEL TOOLKIT</div>
+      <h1>Excel 統計分析工具</h1>
+      <p>上傳 Excel，選擇數值欄位，即可快速計算基本統計值。</p>
+    </header>
+
+    <section class="panel upload-panel">
+      <h2><span class="step">01</span> 上傳 Excel 檔案</h2>
+      <label class="drop-zone" id="dropZone" for="fileInput">
+        <span class="upload-icon" aria-hidden="true">↑</span>
+        <strong>點擊選擇檔案，或將檔案拖曳到這裡</strong>
+        <span class="muted">支援 .xlsx、.xls、.xlsm、.xlsb、.csv</span>
+        <input id="fileInput" type="file" accept=".xlsx,.xls,.xlsm,.xlsb,.csv">
+      </label>
+      <p id="fileStatus" class="status" role="status">尚未選擇檔案</p>
+      <p class="privacy-note">檔案由瀏覽器本機處理，不會傳送到本網站伺服器。SheetJS 函式庫需透過網路載入。</p>
+    </section>
+
+    <section class="panel" id="dataPanel" hidden>
+      <h2><span class="step">02</span> 選擇資料</h2>
+      <div class="controls">
+        <label>
+          工作表
+          <select id="sheetSelect"></select>
+        </label>
+        <label>
+          統計欄位
+          <select id="columnSelect"></select>
+        </label>
+      </div>
+      <div class="preview-heading">
+        <h3>資料預覽</h3>
+        <span id="previewCount" class="muted"></span>
+      </div>
+      <div class="table-wrap">
+        <table id="previewTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="muted small">預覽最多顯示前 10 列。第一列會被視為欄位名稱。</p>
+    </section>
+
+    <section class="panel" id="resultPanel" hidden>
+      <div class="results-header">
+        <div>
+          <h2><span class="step">03</span> 統計結果</h2>
+          <p id="resultDescription" class="muted"></p>
+        </div>
+        <button id="recalculateButton" class="secondary-button" type="button">重新計算</button>
+      </div>
+      <div id="statsGrid" class="stats-grid"></div>
+      <div class="definition-note">
+        <strong>計算說明</strong>
+        <p>樣本變異數與樣本標準差使用 n − 1 作為分母。空白與非數值資料不納入計算；數字格式的文字會嘗試轉成數值。</p>
+        <p>若有多個數值並列最高出現次數，會一併列為眾數；若每個數值只出現一次，則顯示「無眾數」。</p>
+      </div>
+    </section>
+
+    <footer>簡易前端工具 · 資料只在目前瀏覽器頁面中處理</footer>
+  </main>
+</body>
+</html>
